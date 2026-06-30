@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
 import { docsContentRoute, docsRoute } from '@/lib/shared';
 
@@ -11,7 +11,7 @@ const { rewrite: rewriteSuffix } = rewritePath(
   `${docsContentRoute}{/*path}/content.md`,
 );
 
-export default function proxy(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const result = rewriteSuffix(request.nextUrl.pathname);
   if (result) {
     return NextResponse.rewrite(new URL(result, request.nextUrl));
