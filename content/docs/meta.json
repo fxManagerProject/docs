@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "index",
+    "support",
+    "---[ScrollText]Guides---",
+    "development",
+    "---[BookText]Documentation---",
+    "...",
+    "---[Link]External Links---",
+    "external:[GitHub Organization](https://github.com/fxManagerProject)",
+    "external:[Latest Release](https://github.com/fxManagerProject/fxManager/releases)"
+  ]
+}
