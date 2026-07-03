@@ -1,0 +1,51 @@
+---
+title: txAdmin Event Compatibility
+description: Out-of-the-box compatibility with txAdmin events to ensure your existing scripts work without modifications.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+## Overview
+
+To make switching to **fxManager** seamless, the provided game resource automatically emulates native `txAdmin` events. If your existing scripts listen for txAdmin notifications, server lifecycle updates, or moderation actions, they will work out of the box. 
+
+<Callout type="info" title="Official Documentation Reference">
+  For more details on txAdmins events, you can reference the [Official txAdmin Events Documentation](https://github.com/citizenfx/txAdmin/blob/master/docs/events.md).
+</Callout>
+
+---
+
+## How to Listen to Events
+
+You can catch these events in your server scripts exactly how you would with standard txAdmin:
+
+```lua tab="lua"
+AddEventHandler('txAdmin:events:playerBanned', function(data)
+    print(data.author .. " banned " .. data.targetName .. " for: " .. data.reason)
+end)
+```
+```js tab="JS"
+on('txAdmin:events:playerBanned', (data) => {
+  const { author, targetName, reason } = data;
+
+  console.log(`${author} banned ${targetName} for: ${reason}.`);
+});
+````
+```cs tab="C#"
+EventHandlers["txAdmin:events:playerBanned"] += new Action<dynamic>((data) =>
+{
+    try
+    {
+        string author = data.author;
+        string targetName = data.targetName;
+        string reason = data.reason;
+
+        Debug.WriteLine($"{author} banned {targetName} for: {reason}");
+    }
+    catch (Exception ex)
+    {
+        Debug.WriteLine($"Error parsing event data: {ex.Message}");
+    }
+});
+```
