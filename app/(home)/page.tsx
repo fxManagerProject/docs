@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import iconSvg from "./icon.svg";
 import {
   ChartLine,
   ChevronRight,
@@ -15,7 +14,7 @@ export default function HomePage() {
       <div className="text-center mb-16 animate-fade-in">
         <div className="mb-6">
           <Image
-            src={iconSvg}
+            src="/icon.svg"
             alt="fxManager Logo"
             width={96}
             height={96}
