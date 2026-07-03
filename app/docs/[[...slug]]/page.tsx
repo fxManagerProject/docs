@@ -13,6 +13,9 @@ import type { Metadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { gitConfig } from "@/lib/shared";
 
+/** pages that are considered info pages and should not have a copy markdownUrl & open on git/llm agents */
+const INFO_PAGES = ["support"];
+
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
@@ -20,6 +23,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  const isInfoPage = !params.slug || INFO_PAGES.includes(params.slug.join("/"));
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -28,11 +32,15 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
         {page.data.description}
       </DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
-        <MarkdownCopyButton markdownUrl={markdownUrl} />
-        <ViewOptionsPopover
-          markdownUrl={markdownUrl}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
-        />
+        {!isInfoPage && (
+          <>
+            <MarkdownCopyButton markdownUrl={markdownUrl} />
+            <ViewOptionsPopover
+              markdownUrl={markdownUrl}
+              githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
+            />
+          </>
+        )}
       </div>
       <DocsBody>
         <MDX
