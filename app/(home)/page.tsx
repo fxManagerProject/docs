@@ -37,18 +37,18 @@ export default function HomePage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
+            href="/docs/support"
+            className="w-full sm:w-auto inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fd-ring"
+          >
+            Support the project
+          </Link>
+          <Link
             href="/docs"
             className="w-full sm:w-auto inline-flex h-11 items-center justify-center rounded-md bg-fd-primary px-8 font-medium text-fd-primary-foreground shadow transition-colors hover:bg-fd-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fd-ring"
           >
             View Docs
             <ChevronRight className="ml-2" />
           </Link>
-          {/*<Link
-            href="/docs/features"
-            className="w-full sm:w-auto inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fd-ring"
-          >
-            View Features
-          </Link>*/}
         </div>
       </div>
 
