@@ -1,0 +1,94 @@
+---
+title: "Installation Guide"
+description: "How to download, configure, and initialize fxManager for your game server."
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Steps>
+<Step>
+
+### Download the Release Assets
+
+Go to the [GitHub Releases Page](https://github.com/fxManagerProject/fxmanager/releases) and download the target assets for your environment. You will need two components:
+1. The backend application binary matching your host operating system (`windows` or `linux`).
+2. The `resource` archive containing the FXServer game-side bridge.
+
+Extract the zip archive contents directly into your chosen host directory.
+
+<Callout type="warn" title="Strict Directory Hierarchy">
+  The panel asset structure must remain intact exactly as extracted. Moving or separating the `public/` asset directory away from the primary `fxmanager` executable will cause path resolution failures at runtime.
+</Callout>
+
+```text
+your-install-folder/
+├── fxmanager-windows.exe (or fxmanager-linux)
+├── public/                 <-- Critical front-end assets
+└── .env                    <-- optional
+```
+
+</Step>
+
+<Step>
+
+### Prepare FXServer Requirements
+
+fxManager acts as an external process manager; it does not bundle or install the base game server binaries for you. Ensure your baseline server structure is already functional.
+
+#### Requirements Checklist:
+
+* **FXServer Artifacts:** Ensure your runtime artifacts are up to date.
+  * *Recommended Tool:* [JG Scripts Artifacts Portal](https://artifacts.jgscripts.com)
+  * *Vanilla Downloads:* [Windows Artifacts Master](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/) | [Linux Artifacts Master](https://runtime.fivem.net/artifacts/fivem/build_server_linux/master/)
+
+
+* **Valid Server Data Directory:** Your layout must contain a standard root `resources/` folder and your primary `server.cfg` file.
+
+#### Installing the Game Resource:
+
+Take the extracted `resource/` bundle from Step 1, rename or verify the folder is called `fxManager`, and drop it cleanly into your server's `resources/` directory.
+
+Optionally, for projects with experienced teams you can place the resource within the `system_resources/` directory and delete the txAdmin resource (`monitor`). However, do not do this unless you know what you're doing.
+
+</Step>
+<Step>
+
+### Run the Core Executable
+
+Navigate to your installation folder and execute the binary file to launch the integrated configuration listener:
+
+```bash
+# On Linux
+chmod +x fxmanager-linux
+./fxmanager-linux
+
+# On Windows
+fxmanager-windows.exe
+```
+
+The initial initialization stream will write a security token to your console stdout and output a localized setup address (i.e.: `http://<your-server-ip>:3000/setup?token=somerandomtoken`).
+
+</Step>
+<Step>
+
+### Complete Web Setup Wizard
+
+Open the placeholder setup link generated in your console. Paste your security token to authorize the configuration panel, where you will finalize the system setup:
+
+1. **Create Master Account:** Define the root super-admin account credentials.
+2. **Map Directory Paths:** Provide the absolute file system paths to your `FXServer` executable and your target `server-data` directory. *(Note: Auto-detect works if directories are adjacent, otherwise paths must be typed out manually).*
+3. **Define Staff Layouts:** Configure initial structural groups and access nodes.
+4. **Import txAdmin Data (Optional):** Migrate existing historical user files straight into fxManager.
+
+</Step>
+<Step>
+
+### Finalizing Setup
+
+Once you finish the web initialization workflow, fxManager seals the setup interface and writes a persistent system lock flag. Subsequent boot sequences skip setup steps and boot straight into the active control panel interface.
+
+Most system variables, group mappings, and path pointers can be modified directly within the configuration dashboard later. However, **the root Master Account cannot be deleted, transferred, or reassigned.**
+
+</Step>
+</Steps>
