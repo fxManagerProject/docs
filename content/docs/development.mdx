@@ -1,0 +1,144 @@
+---
+title: Development & Contributing
+description: How to development and contribute to fxManager.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+<Callout type="warn" title="Active Development Phase">
+  fxManager is under intensive development and is **not yet considered stable** until a `v1.0.0+` release. We welcome transparency, feedback, and pull requests to help us reach this milestone.
+</Callout>
+
+---
+
+## Architecture Overview
+
+fxManager is managed as a high-performance **Turborepo monorepo** driven by the **Bun** package manager.
+
+```text
+fxManager/
+├── apps/
+│   ├── core/          # Process Manager & backend webserver
+│   ├── resource/      # FXServer game resource bridge
+│   └── webpanel/      # React SPA dashboard UI
+├── packages/
+│   ├── database/      # Drizzle ORM schemas & automated migration engine
+│   ├── shared/        # Universal enums, types, and utility wrappers
+│   └── ui/            # Shared React ShadCN components
+```
+
+---
+
+## 1. Local Environment Setup
+
+### System Prerequisites
+
+Ensure you have the following software installed on your machine:
+
+* **Bun:** Version `>= 1.3.2` (Configured package manager)
+* **Node.js Environment:** Version `>= 20`
+
+### Workspace Initialization
+
+Clone the project and execute the installation routine to map monorepo links:
+
+```bash
+# Clone the workspace repository
+git clone https://github.com/fxManagerProject/fxManager.git
+cd fxManager
+
+# Install package nodes via Bun
+bun install
+```
+
+### Launching Development Mode
+
+To start the full reactive orchestration workspace simultaneously, run the core dev script:
+
+```bash
+bun run dev
+```
+
+* **Vite React Dev Server UI:** Boots onto `http://localhost:5173`.
+* **API / WebSocket Core System:** Boots onto `http://localhost:3000`.
+
+*Note: The UI automatically proxies data hooks straight to the backend layer on port `3000` out of the box.*
+
+---
+
+## 2. Component/Game Resource Workflow
+
+When working inside the game-side resource folder (`apps/resource`), use these target scripts:
+
+| Command | Action / Objective |
+| :------ | :--- |
+| `bun run web:dev` | Runs the localized Vite dev server specifically for the NUI front-end UI. |
+| `bun run watch` | Runs an active watcher to rebuild compiled output binaries instantly as files update. |
+| `bun run deploy` | Compiles the active bundle package and automatically pushes it directly to the path matching your local `.env` variable `DEPLOY_PATH`. |
+
+---
+
+## 3. Database Updates & Migrations
+
+All schema operations leverage **Drizzle ORM** inside `packages/database`. The schema enforces **strict asset immutability rules**: never alter structural `.sql` or `.ts` migration profiles post production deployment.
+
+### Generating a Schema Migration
+
+To alter database architectures cleanly, update your schema structures and invoke the automation hook:
+
+```bash
+bun run db:migrate
+```
+
+1. Provide a short description of the changes when prompted.
+2. The synchronization layer automatically outputs a `.ts` template file to `packages/database/src/migrations/migrations/` and updates the root manifest registry.
+3. The server core applies these files automatically upon the next clean framework boot.
+
+### Inspecting Local Data Tables
+
+To inspect active datasets, fire the localized database GUI engine:
+
+```bash
+bun run db:studio
+```
+
+---
+
+## 4. Code Quality & Standards
+
+We use **Biome** to maintain optimal formatting speeds, completely replacing legacy configurations like Prettier and ESLint.
+
+Before committing files or submitting a Pull Request, run the validation check:
+
+```bash
+bun run check         # Runs Lint + Format + Code Fix optimizations (Recommended)
+bun run lint          # Executes code pattern evaluations
+bun run format        # Applies layout adjustments to project files
+bun run typecheck     # Fires parallel type checks (tsc --noEmit) across the monorepo via Turbo
+```
+
+---
+
+## 5. Compiling & Building
+
+When your changes are complete, execute a full pipeline evaluation to compile multi-platform binary wrappers:
+
+```bash
+bun run build                   # Compiles both target profiles via Turbo caching engines
+bun run build --target=windows  # Compiles the Windows target profile
+bun run build --target=linux    # Compiles the Linux target profile
+```
+
+### Output Distribution Target Structure
+
+Compiled bundles dump directly into the root `dist/` subfolder:
+
+```text
+dist/
+ ├── fxmanager-linux          ← Linux server binary
+ ├── fxmanager-windows.exe    ← Windows server binary
+ ├── public/                  ← Embedded web app assets (Must remain next to binary)
+ └── resource/                ← FXServer asset (Drop into your server's resources/ folder)
+
+```
