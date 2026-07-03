@@ -1,0 +1,120 @@
+---
+title: "Permissions"
+description: How permissions are managed in FXServer via fxManager.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Shield, RefreshCw, Terminal, Code } from 'lucide-react';
+
+The bitfield permissions in **fxManager** are syncronized in the game and made readily available to all server side scripts using fxServer's native ACE commands.
+
+---
+
+## How to use the permissions
+
+Two options are offered to check permissions:
+
+1. Using the native [`IS_PLAYER_ACE_ALLOWED`](https://docs.fivem.net/natives/?_0xDEDAE23D)
+2. Using the export from fxManager resource: `exports.fxmanager:hasPermission(source, permission)`
+    * `source`: string | number
+    * `permission`: string
+
+### Code example:
+
+```lua tab="lua"
+-- using the export
+local hasPermission = exports.fxmanager:hasPermission(source, "players.kick")
+
+-- using the native
+local hasPermission = IsPlayerAceAllowed(source, "fxmanager.players.kick")
+```
+```js tab="JS"
+// using the export
+const hasPermission = exports.fxmanager.hasPermission(source, "players.kick");
+
+// using the native
+const hasPermission = IsPlayerAceAllowed(source, "fxmanager.players.kick");
+```
+```cs tab="C#"
+// using the export
+bool hasPermission = Exports["fxmanager"].hasPermission(source, "players.kick");
+
+// using the native
+bool hasPermission = API.IsPlayerAceAllowed(source.ToString(), "fxmanager.players.kick");
+```
+
+## Permission values
+
+<Callout type="info" title="Master Override">
+  Users with the **MASTER** permission bypass this list entirely. They are granted a universal `fxmanager` root ACE, giving them implicit access to every node listed below.
+</Callout>
+
+<Callout type="warn" title="Using the export">
+  If using the native, remember you need to prefix the acepermission with `fxmanager.` !
+</Callout>
+
+---
+
+### Moderation
+
+Permissions related to active player management and policy enforcement.
+
+| Permission | Functionality |
+| :--- | :--- |
+| `players.kick` | Disconnect players from the server. |
+| `players.ban` | Prevent players from reconnecting. |
+| `players.warn` | Issue formal warnings to users. |
+| `players.revoke_kick` | Clear kick history for players. |
+| `players.revoke_ban` | Unban players from the server. |
+| `players.revoke_warn` | Remove warnings from player profiles. |
+
+---
+
+### Access Control
+
+Permissions regulating server whitelist registration and entry authorization.
+
+| Permission | Functionality |
+| :--- | :--- |
+| `players.whitelist` | Grant whitelist access to players. |
+| `players.revoke_whitelist` | Strip whitelist access from players. |
+
+---
+
+### Reporting
+
+Permissions mapping directly to the player-to-staff communication ticket flow.
+
+| Permission | Functionality |
+| :--- | :--- |
+| `reports.view` | Read incoming player reports. |
+| `reports.reply` | Send messages within report threads. |
+| `reports.close` | Mark reports as closed or resolved. |
+
+---
+
+### System Controls
+
+Permissions facilitating immediate interaction with the underlying FXServer environment and command stream.
+
+| Permission | Functionality |
+| :--- | :--- |
+| `control.server` | Start, stop, or restart the server instance. |
+| `console.view` | Read-only access to live server stdout logs. |
+| `console.write` | Run raw commands directly via the server console input. |
+
+---
+
+### Administration
+
+Permissions regarding structural layout changes, file access, and staff hierarchy tracking.
+
+| Permission | Functionality |
+| :--- | :--- |
+| `system.audit_log` | View historical logs of staff actions and system triggers. |
+| `system.performance` | View live server runtime resource metrics and performance snapshots. |
+| `commands.resources` | Start, stop, and restart specific game resources. |
+| `settings.write` | Modify global web panel and API properties. |
+| `server.cfg_editor` | Live file modification of `server.cfg` and nested includes. |
+| `manage.admins` | Create, update roles, or delete dashboard administrators. |
