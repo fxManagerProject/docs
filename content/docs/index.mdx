@@ -2,11 +2,58 @@
 title: fxManager
 ---
 
-Well, project isn't live why would the docs be ?
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Server, Shield, Terminal, Code } from 'lucide-react';
 
-{/* ## What is Next?
+Welcome to the **fxManager** documentation. Select a section below to dive into integration guides, system architectures, or localized development workflows.
+
+---
+
+## Game Server Integration
+
+Configure the bridge connecting your live FiveM/RedM game runtime directly to your centralized administration core.
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
-</Cards> */}
+  <Card
+    icon={<Server className="text-blue-500" />}
+    title="FXServer Resource Setup"
+    description="How to install, connect, and configure the background resource inside your FXServer framework."
+    href="/docs/fxserver"
+  />
+  <Card
+    icon={<Terminal className="text-purple-500" />}
+    title="txAdmin Compatibility Reference"
+    description="A complete list of supported txAdmin events and payload schemas that run out of the box."
+    href="/docs/fxserver/txadmin-compatibility"
+  />
+</Cards>
+
+---
+
+## Core System Architecture
+
+Understand how data states, network wrappers, and operational privileges translate securely down into the game world.
+
+<Cards>
+  <Card
+    icon={<Shield className="text-green-500" />}
+    title="Permission Translation & Access"
+    description="Deep-dive into how web panel configurations compress into numeric bitfields and resolve as native ACE permissions."
+    href="/docs/architecture/permissions"
+  />
+</Cards>
+
+---
+
+## Developer Workspace
+
+Everything you need to clone, modify, and build the fxManager application ecosystem from source.
+
+<Cards>
+  <Card
+    icon={<Code className="text-pink-500" />}
+    title="Development & Contributing"
+    description="Step-by-step instructions for running the monorepo workspace locally, executing Drizzle migrations, and compiling binary targets."
+    href="/docs/development/contributing"
+  />
+</Cards>
