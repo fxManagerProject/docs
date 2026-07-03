@@ -40,7 +40,7 @@ export default function HomePage() {
             href="/docs"
             className="w-full sm:w-auto inline-flex h-11 items-center justify-center rounded-md bg-fd-primary px-8 font-medium text-fd-primary-foreground shadow transition-colors hover:bg-fd-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fd-ring"
           >
-            Get Started
+            View Docs
             <ChevronRight className="ml-2" />
           </Link>
           {/*<Link
