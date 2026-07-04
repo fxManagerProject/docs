@@ -1,0 +1,331 @@
+---
+title: "Moderation Exports"
+description: ""
+---
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+Methods for moderating players and reviewing moderation actions.
+
+## Ban exports
+
+### `recentBans`
+
+Retrieves a list of recent bans.
+
+**Parameters:**
+<TypeTable
+  type={{
+    options: {
+      type: 'PageSize',
+      required: false,
+      description: (
+        <div>
+          An optional configuration object for configuring pagination:
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li><code>page</code>: Target page offset.</li>
+            <li><code>pageSize</code>: Total items returned per frame.</li>
+          </ul>
+        </div>
+      ),
+    },
+  }}
+/>
+
+<Accordions type="single">
+  <Accordion title="Response Format">
+      ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+          id: number;
+          playerId: number;
+          name: string;
+          reason: string;
+          issuer: number | null;
+          createdAt: Date;
+          expiresAt: Date | null;
+          revokedAt: Date | null;
+        }[];
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local options = {
+  page = 1;
+  pageSize = 5;
+}
+local result = exports.fxmanager:recentBans(options)
+
+if result.ok then
+    for _, ban in ipairs(result.data) do
+        print("Bane (".. ban.id ..") Player: " .. ban.name .. " - " .. ban.reason)
+    end
+else
+    print("Failed to fetch bans: " .. result.error)
+end
+
+```
+
+```js tab="JS"
+const options = {
+  page: 1,
+  pageSize: 5,
+};
+const result = await exports.fxmanager:recentBans(options);
+
+if (result.ok) {
+  result.data.forEach(({ id, name, reason }) =>
+    console.log(`Ban: (${id}) Player: ${name} - ${reason}`)
+  );
+} else {
+  console.error(`Failed to fetch bans: ${result.error}`);
+}
+```
+
+### `searchBans`
+
+**Parameters:**
+
+<TypeTable
+  type={{
+    query: {
+      type: 'string',
+      description: 'The search term (e.g., player name, Rockstar license, Discord ID, or ban reason).',
+      required: true,
+    },
+    options: {
+      type: 'PageSize',
+      required: false,
+      description: (
+        <div>
+          <p>An optional configuration object to customize pagination limits:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li>
+              page: <code>number</code> - The page number to retrieve for pagination.
+            </li>
+            <li>
+              pageSize: <code>number</code> - The number of results to return per page.
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+  }}
+/>
+
+<Accordions type="single">
+  <Accordion title="Response Format">
+      ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+          id: number;
+          playerId: number;
+          name: string;
+          reason: string;
+          issuer: number | null;
+          createdAt: Date;
+          expiresAt: Date | null;
+          revokedAt: Date | null;
+        }[];
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local query = "Andreutu"
+local options = {
+  page = 1;
+  pageSize = 5;
+}
+local result = exports.fxmanager:searchBans(query, options)
+
+if result.ok then
+    for _, ban in ipairs(result.data) do
+        print("Ban (".. ban.id ..") Player: " .. ban.name .. " - " .. ban.reason)
+    end
+else
+    print("Failed to searcg for bans: " .. result.error)
+end
+
+```
+
+```js tab="JS"
+const query = "discord:226389308305702912";
+const options = {
+  page: 1,
+  pageSize: 5,
+};
+const result = await exports.fxmanager:searchBans(query, options);
+
+if (result.ok) {
+  result.data.forEach(({ id, name, reason }) =>
+    console.log(`Ban: (${id}) Player: ${name} - ${reason}`)
+  );
+} else {
+  console.error(`Failed to search for bans: ${result.error}`);
+}
+```
+
+### `ban`
+
+**Payload:**
+<TypeTable
+  type={{
+    target: {
+      type: 'Target',
+      required: true,
+      description: (
+        <div>
+          <p>One of the following target types:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li><code>number</code>: The player's server ID.</li>
+            <li><code>{'{ serverId: number }'}</code>: The player's server ID.</li>
+            <li><code>{'{ playerId: number }'}</code>: The player's database ID.</li>
+            <li><code>{'{ identifiers: { license: string } }'}</code>: Direct lookup using Rockstar license hashes.</li>
+          </ul>
+        </div>
+      ),
+    },
+    reason: {
+      type: 'string',
+      required: true,
+      description: 'The reason or enforcement context attached to the ban.',
+    },
+    expiresAt: {
+      type: 'string | null',
+      required: false,
+      description: 'An ISO timestamp string detailing when the ban lifts. Pass null for a permanent ban.',
+    },
+    durationSeconds: {
+      type: 'number | null',
+      required: false,
+      description: 'Alternative way to specify ban length in seconds. Pass null for a permanent ban.',
+    },
+    by: {
+      type: 'number',
+      required: true,
+      description: 'The database ID of the Admin/Staff member issuing the ban.',
+    },
+  }}
+/>
+
+<Accordions type="single">
+  <Accordion title="Response Format">
+      ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+          banId: number;
+        };
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local target = { serverId = 1 }
+local reason = "No reason provided"
+local expiresAt = nil
+local durationSeconds = nil
+local by = 1
+
+local response = exports.fxManager:ban(target, reason, expiresAt, durationSeconds, by)
+
+if response.ok then
+  print("Ban successful, banId:", response.data.banId)
+else
+  print("Unable to ban:", response.error)
+end
+```
+```ts tab="JS"
+const target = { serverId: 1 };
+const reason = "No reason provided";
+const expiresAt = null;
+const durationSeconds = null;
+const by = 1;
+
+const response = await exports.fxManager.ban(target, reason, expiresAt, durationSeconds, by);
+if (response.ok) {
+  console.log("Ban successful, banId:", response.data.banId);
+} else {
+  console.log("Unable to ban:", response.error);
+}
+```
+
+Here is the complete documentation block for the `revokeBan` export, maintaining the exact layout, component syntax, and compilation-safe JSX formatting used in your `ban` example.
+
+---
+
+### `revokeBan`
+
+**Parameters:**
+<TypeTable
+  type={{
+    banId: {
+      type: 'number',
+      required: true,
+      description: 'The unique database ID of the ban log you want to revoke.',
+    },
+    options: {
+      type: 'object',
+      required: false,
+      description: (
+        <div>
+          <p>An optional configuration object containing metadata details:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li>
+              by: <code>number</code> - The database ID of the Admin/Staff member revoking the ban.
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local banId = 42
+local options = {
+    by = 1
+}
+
+local response = exports.fxManager:revokeBan(banId, options)
+
+if response.ok then
+    print("Ban successfully revoked, banId:", response.data.banId)
+else
+    print("Unable to revoke ban:", response.error)
+end
+
+```
+
+```js tab="JS"
+const banId = 42;
+const options = {
+  by: 1,
+};
+
+const response = await exports.fxManager.revokeBan(banId, options);
+
+if (response.ok) {
+  console.log("Ban successfully revoked, banId:", response.data.banId);
+} else {
+  console.log("Unable to revoke ban:", response.error);
+}
+
+```
