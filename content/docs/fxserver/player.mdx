@@ -3,9 +3,8 @@ title: Player Exports
 description: Reference guide for interacting with fxManager programmatically via server-side resource exports.
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
 
 Methods for retrieving live connection data, searching historical player files, or querying specific player targets.
 
@@ -66,6 +65,27 @@ if (result.ok) {
 ### `getPlayer`
 Looks up an individual player record based on a structured `Target` descriptor. 
 
+**Parameters:**
+<TypeTable
+  type={{
+    target: {
+      type: 'Target',
+      required: true,
+      description: (
+        <div>
+          <p>One of the following target types:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li><code>number</code>: The player's server ID.</li>
+            <li><code>{'{ serverId: number }'}</code>: The player's server ID.</li>
+            <li><code>{'{ playerId: number }'}</code>: The player's database ID.</li>
+            <li><code>{'{ identifiers: { license: string } }'}</code>: Direct lookup using Rockstar license hashes.</li>
+          </ul>
+        </div>
+      ),
+    },
+  }}
+/>
+
 <Accordions type="single">
   <Accordion title="Response Format">
       ```ts tab="TypeScript"
@@ -122,11 +142,39 @@ if (result.ok) {
 ### `searchPlayers`
 Searches the entire historical player database using text match strings alongside pagination and sorting options.
 
-**Options Parameter Structure:**
-* `page` *(number, optional)*
-* `pageSize` *(number, optional)*
-* `sortBy` *('playtime' | 'lastSeen' | 'firstSeen', optional)*
-* `sortOrder` *('asc' | 'desc', optional)*
+**Parameters:**
+<TypeTable
+  type={{
+    query: {
+      type: 'string',
+      required: true,
+      description: 'The search term (e.g., player name, Rockstar license, Discord ID, or ban reason).',
+    },
+    options: {
+      type: 'Pagination',
+      required: false,
+      description: (
+        <div>
+          <p>An optional configuration object to customize sorting and pagination limits:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li>
+              page: <code>number</code> - The page number to retrieve for pagination.
+            </li>
+            <li>
+              pageSize: <code>number</code> - The number of results to return per page.
+            </li>
+            <li>
+              sortBy: <code>{"'playtime' | 'lastSeen' | 'firstSeen'"}</code> - The field key used to sort the resulting array.
+            </li>
+            <li>
+              sortOrder: <code>{"'asc' | 'desc'"}</code> - The direction to sort the matches.
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+  }}
+/>
 
 <Accordions type="single">
 <Accordion title="Response Format">
@@ -183,11 +231,36 @@ const result = await exports.fxmanager.searchPlayers("GamerName", opts);
 
 Appends an administrative note to a player's file history. The invoking resource name is automatically captured in the background for auditing.
 
-**Arguments payload:**
-
-* `target`: A valid `Target` lookup shape (see `getPlayer`).
-* `content`: The string content of the note.
-* `by`: The database user ID of the staff member creating the note.
+**Parameters:**
+<TypeTable
+  type={{
+    target: {
+      type: 'Target',
+      required: true,
+      description: (
+        <div>
+          <p>One of the following target types:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li><code>number</code>: The player's server ID.</li>
+            <li><code>{'{ serverId: number }'}</code>: The player's server ID.</li>
+            <li><code>{'{ playerId: number }'}</code>: The player's database ID.</li>
+            <li><code>{'{ identifiers: { license: string } }'}</code>: Direct lookup using Rockstar license hashes.</li>
+          </ul>
+        </div>
+      ),
+    },
+    content: {
+      type: 'string',
+      required: true,
+      description: 'The content of the note.',
+    },
+    by: {
+      type: 'number',
+      required: true,
+      description: 'The database admin ID of the staff member creating the note.',
+    },
+  }}
+/>
 
 <Accordions type="single">
 <Accordion title="Response Format">
