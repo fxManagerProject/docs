@@ -4,6 +4,8 @@ import { baseOptions } from "@/lib/layout.shared";
 
 export const metadata: Metadata = {
   title: "fxManager",
+  description:
+    "fxManager is an alternative webpanel to handle fxserver (fivem/redm) to txAdmin",
   icons: {
     icon: [
       {
