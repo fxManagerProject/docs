@@ -1,0 +1,144 @@
+---
+title: "Audit Exports"
+description: "Exports to work with audit logs"
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+### `actionRecap`
+
+Sends a recap of an action made by an admin to fxManager's audit log.
+
+**Payload:**
+<TypeTable type={{
+  serverId: {
+    type: 'string',
+    description: 'The server ID of the connected Admin/Staff member',
+    required: true,
+  },
+  label: {
+    type: 'string',
+    description: 'The label of the action, has to only be alphanumeric and _ characters',
+    required: true,
+  },
+  target: {
+    type: 'Target',
+    required: false,
+    description: (
+      <div>
+        <p>One of the following target types:</p>
+        <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+          <li><code>number</code>: The player's server ID.</li>
+          <li><code>{'{ serverId: number }'}</code>: The player's server ID.</li>
+          <li><code>{'{ playerId: number }'}</code>: The player's database ID.</li>
+          <li><code>{'{ identifiers: { license: string } }'}</code>: Direct lookup using Rockstar license hashes.</li>
+        </ul>
+      </div>
+    ),
+  },
+  metadata: {
+    type: 'object',
+    description: 'Additional metadata to include with the audit log entry as a key-value object',
+    required: false,
+  },
+}} />
+
+```lua tab="Lua"
+local response = exports.fxmanager:actionRecap({
+  serverId = 1,
+  label = 'example_action',
+  target = nil,
+  metadata = {
+    key = 'value',
+    key2 = 1234
+  },
+})
+
+if response.ok then
+  print('Action recap sent successfully, id:' .. response.data.recapId)
+else
+  print('Failed to send action recap')
+end
+```
+```ts tab="JS"
+const response = await exports.fxmanager.actionRecap({
+  serverId: 1,
+  label: 'example_action',
+  target: null,
+  metadata: {
+    key: 'value',
+    key2: 1234
+  },
+});
+
+if (response.ok) {
+  console.log('Action recap sent successfully, id:', response.data.recapId);
+} else {
+  console.log('Failed to send action recap');
+}
+```
+
+---
+
+### `getActionRecap`
+
+Get the last actions made by an admin.
+
+**Payload:**
+<TypeTable type={{
+  page: {
+    type: 'number',
+    description: 'The page number to retrieve',
+    required: false,
+  },
+  pageSize: {
+    type: 'number',
+    description: 'The number of actions to retrieve per page',
+    required: false,
+  },
+  serverId: {
+    type: 'string',
+    description: 'The server ID of the connected Admin/Staff member (or use the adminId)',
+    required: true,
+  },
+  adminId: {
+    type: 'string',
+    description: 'The database ID of the Admin/Staff (or use the serverId)',
+    required: false,
+  },
+}} />
+
+```lua tab="Lua"
+local response = exports.fxmanager:actionRecap({
+  serverId = 1,
+  label = 'example_action',
+  target = nil,
+  metadata = {
+    key = 'value',
+    key2 = 1234
+  },
+})
+
+if response.ok then
+  print('Action recap sent successfully, id:' .. response.data.recapId)
+else
+  print('Failed to send action recap')
+end
+```
+```ts tab="JS"
+const response = await exports.fxmanager.actionRecap({
+  serverId: 1,
+  label: 'example_action',
+  target: null,
+  metadata: {
+    key: 'value',
+    key2: 1234
+  },
+});
+
+if (response.ok) {
+  console.log('Action recap sent successfully, id:', response.data.recapId);
+} else {
+  console.log('Failed to send action recap');
+}
+```

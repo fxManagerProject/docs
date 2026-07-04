@@ -1,12 +1,15 @@
 {
   "pages": [
+    "---Guides---",
     "index",
     "permissions",
     "groups",
     "txadmin-compat",
+    "---Exports---",
     "player",
     "moderation",
+    "whitelist",
     "server",
-    "whitelist"
+    "audit"
   ]
 }
