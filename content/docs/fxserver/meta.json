@@ -1,3 +1,10 @@
 {
-  "pages": ["index", "permissions", "txadmin-compat", "player", "moderation"]
+  "pages": [
+    "index",
+    "permissions",
+    "txadmin-compat",
+    "player",
+    "moderation",
+    "server"
+  ]
 }

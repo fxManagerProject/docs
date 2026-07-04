@@ -1,0 +1,82 @@
+---
+title: "Server Exports"
+description: "Exports to handle server actions"
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+### `serverStop`
+
+Gracefully shuts down the running server environment.
+
+**Payload:**
+<TypeTable
+  type={{
+    by: {
+      type: 'number',
+      required: false,
+      description: 'The database ID of the Admin/Staff member initiating the server shutdown.',
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local by = 1
+local response = exports.fxManager:serverStop(by)
+
+if response.ok then
+    print("Server stop command processed successfully.")
+else
+    print("Failed to stop server:", response.error)
+end
+```
+
+```js tab="JS"
+const by = 1;
+const response = await exports.fxManager.serverStop(by);
+
+if (response.ok) {
+  console.log("Server stop command processed successfully.");
+} else {
+  console.error(`Failed to stop server: ${response.error}`);
+}
+```
+
+---
+
+### `serverRestart`
+
+Triggers a complete cycle sequence of stopping and booting the server back up.
+
+**Payload:**
+<TypeTable
+  type={{
+    by: {
+      type: 'number',
+      required: false,
+      description: 'The database ID of the Admin/Staff member initiating the server restart.',
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local by = 1
+local response = exports.fxManager:serverRestart(by)
+
+if response.ok then
+    print("Server restart command processed successfully.")
+else
+    print("Failed to restart server:", response.error)
+end
+```
+
+```js tab="JS"
+const by = 1;
+const response = await exports.fxManager.serverRestart(by);
+
+if (response.ok) {
+  console.log("Server restart command processed successfully.");
+} else {
+  console.error(`Failed to restart server: ${response.error}`);
+}
+```
