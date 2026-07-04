@@ -4,4 +4,28 @@ description: Learn how to connect and synchronize FXServer resources with fxMana
 ---
 
 When using the provided fxManager resource, it will expose a variety of exports that allow you to interact with the fxManager API.
-We also support txAdmin events automatically. If your current scripts use txAdmin, they will work with fxManager right away, no code changes required.
+We also support <a href="/docs/fxserver/txadmin-compat">txAdmin events</a> automatically. If your current scripts use txAdmin, they will work with fxManager right away, no code changes required.
+
+---
+
+## Supported Target Shapes:
+* **`number`**: Implicitly treated as an active `serverId`.
+* **`{ serverId: number }`**: Explicit inline server slot ID.
+* **`{ playerId: number }`**: Centralized panel dashboard Database ID.
+* **`{ identifiers: { license: string } }`**: Direct lookup using Rockstar license hashes.
+
+## Response Architecture
+
+All data-fetching exports return a unified **Result Wrapper Object**. This design patterns allows you to cleanly check the success state of an internal API or database call before processing payloads.
+
+```ts tab="TypeScript"
+type Result<T> = 
+  | { ok: true; data: T } 
+  | { ok: false; error: string };
+```
+```lua tab="Lua"
+---@class Result
+---@field ok boolean
+---@field data table | nil
+---@field error string | nil
+```
