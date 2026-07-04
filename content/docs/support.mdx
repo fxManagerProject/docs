@@ -103,17 +103,17 @@ import { Cards, Card } from "fumadocs-ui/components/card";
 
 </div>
 
-<div className="flex gap-4 justify-center">
+<div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md mx-auto px-4">
   <a
     href="https://github.com/fxManagerProject/fxManager"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 font-medium transition-colors no-underline box-border"
+    className="inline-flex items-center justify-center gap-2 h-11 px-5 w-full sm:w-auto rounded-lg bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 font-medium transition-colors no-underline box-border whitespace-nowrap"
   >
     <img
       src="/github.svg"
       alt="GitHub Logo"
-      className="w-5 h-5 min-w-[20px] min-h-[20px] object-contain pointer-events-none"
+      className="w-5 h-5 min-w-[20px] min-h-[20px] shrink-0 object-contain pointer-events-none"
       aria-hidden="true"
     />
     <span>Star on GitHub</span>
@@ -123,12 +123,12 @@ import { Cards, Card } from "fumadocs-ui/components/card";
     href="https://discord.gg/WxFGydWfhP"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-[#5865F2] text-white hover:bg-[#4752C4] font-medium transition-colors no-underline box-border"
+    className="inline-flex items-center justify-center gap-2 h-11 px-5 w-full sm:w-auto rounded-lg bg-[#5865F2] text-white hover:bg-[#4752C4] font-medium transition-colors no-underline box-border whitespace-nowrap"
   >
     <img
       src="/discord.svg"
       alt="Discord Logo"
-      className="w-5 h-5 min-w-[20px] min-h-[20px] object-contain pointer-events-none"
+      className="w-5 h-5 min-w-[20px] min-h-[20px] shrink-0 object-contain pointer-events-none"
       aria-hidden="true"
     />
     <span>Join our Discord</span>
