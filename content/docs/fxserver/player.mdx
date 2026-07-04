@@ -1,0 +1,225 @@
+---
+title: Player Exports
+description: Reference guide for interacting with fxManager programmatically via server-side resource exports.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+Methods for retrieving live connection data, searching historical player files, or querying specific player targets.
+
+### `fetchPlayers`
+
+Retrieves an array of all active players currently initialized on the game server.
+
+<Accordions type="single">
+  <Accordion title="Response Format">
+      ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+         	id: number;
+         	name: string;
+         	playtime: number;
+         	identifiers: Record<string, string>;
+         	isStaff: boolean;
+         	firstSeen: Date;
+         	lastSeen: Date;
+         	serverId: number;
+         	ping?: number;
+         	health: number;
+        }[];
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local result = exports.fxmanager:fetchPlayers()
+
+if result.ok then
+    for _, player in ipairs(result.data) do
+        print("Active Player: " .. player.name)
+    end
+else
+    print("Failed to fetch players: " .. result.error)
+end
+
+```
+
+```js tab="JS"
+if (result.ok) {
+  result.data.forEach(player =>
+    console.log(`Active Player: ${player.name}`)
+  );
+} else {
+  console.error(`Failed to fetch players: ${result.error}`);
+}
+```
+
+---
+
+### `getPlayer`
+Looks up an individual player record based on a structured `Target` descriptor. 
+
+<Accordions type="single">
+  <Accordion title="Response Format">
+      ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+         	id: number;
+         	name: string;
+         	playtime: number;
+         	identifiers: Record<string, string>;
+         	isStaff: boolean;
+         	firstSeen: Date;
+         	lastSeen: Date;
+         	serverId: number;
+         	ping?: number;
+         	health: number;
+        };
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+-- Lookup via standard Server ID
+local target = 14
+
+-- Alternate: Lookup via license string
+-- local target = { identifiers = { license = "license:xxxxxxxx" } }
+
+local result = exports.fxmanager:getPlayer(target)
+
+if result.ok then
+    print("Found Player: " .. result.data.name .. " | Playtime: " .. result.data.playtime)
+else
+    print("Lookup failed: " .. result.error)
+end
+
+```
+
+```js tab="JS"
+if (result.ok) {
+  console.log(`Found Player: ${result.data.name}`);
+} else {
+  console.error(`Lookup failed: ${result.error}`);
+}
+
+```
+
+---
+
+### `searchPlayers`
+Searches the entire historical player database using text match strings alongside pagination and sorting options.
+
+**Options Parameter Structure:**
+* `page` *(number, optional)*
+* `pageSize` *(number, optional)*
+* `sortBy` *('playtime' | 'lastSeen' | 'firstSeen', optional)*
+* `sortOrder` *('asc' | 'desc', optional)*
+
+<Accordions type="single">
+<Accordion title="Response Format">
+    ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+         	page: number;
+          pageSize: number;
+          total: number;
+          items: {
+            id: number;
+            name: string;
+            playtime: number;
+            isStaff: boolean;
+            firstSeen: Date;
+            lastSeen: Date;
+          }[];
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local opts = {
+    page = 1,
+    pageSize = 10,
+    sortBy = 'playtime',
+    sortOrder = 'desc'
+}
+
+local result = exports.fxmanager:searchPlayers("John", opts)
+
+if result.ok then
+    print("Found " .. #result.data .. " matches.")
+end
+```
+
+```js tab="JS"
+const opts = {
+  page: 1,
+  pageSize: 10,
+  sortBy: 'playtime',
+  sortOrder: 'desc',
+};
+
+const result = await exports.fxmanager.searchPlayers("GamerName", opts);
+```
+
+### `addNote`
+
+Appends an administrative note to a player's file history. The invoking resource name is automatically captured in the background for auditing.
+
+**Arguments payload:**
+
+* `target`: A valid `Target` lookup shape (see `getPlayer`).
+* `content`: The string content of the note.
+* `by`: The database user ID of the staff member creating the note.
+
+<Accordions type="single">
+<Accordion title="Response Format">
+```ts
+type Result = {
+  ok: true;
+  data: {
+    saved: true;
+  };
+} | {
+  ok: false;
+  error: string;
+}
+```
+</Accordion>
+</Accordions>
+
+```lua tab="Lua"
+local notePayload = {
+    target = 42, -- Server ID
+    content = "Player was warned for aggressive driving patterns.",
+    by = 1       -- Admin Database ID
+}
+
+local result = exports.fxmanager:addNote(notePayload)
+```
+```js tab="JS"
+const notePayload = {
+    target: 42, // Server ID
+    content: "Player was warned for aggressive driving patterns.",
+    by: 1, // Admin Database ID
+}
+
+const result = await exports.fxmanager.addNote(notePayload)
+```
