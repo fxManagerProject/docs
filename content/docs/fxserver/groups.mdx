@@ -1,0 +1,63 @@
+---
+title: "Groups"
+description: Implement groups from the web panel in your resources.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Shield, RefreshCw, Terminal, Code } from 'lucide-react';
+
+Similar to permissions, groups are managed via ACEs and can be checked using the native [`IS_PLAYER_ACE_ALLOWED`](https://docs.fivem.net/natives/?_0xDEDAE23D) or the export from fxManager resource: `exports.fxmanager:hasGroup(source, groupName)`.
+
+---
+
+## How to use the groups
+
+Two options are offered to check groups:
+
+1. Using the native [`IS_PLAYER_ACE_ALLOWED`](https://docs.fivem.net/natives/?_0xDEDAE23D)
+2. Using the export from fxManager resource: `exports.fxmanager:hasGroup(source, groupName)`
+    * `source`: string | number
+    * `groupName`: string
+
+### Code example:
+
+```lua tab="lua"
+-- using the export
+local hasGroup = exports.fxmanager:hasGroup(source, "moderator")
+
+-- using the native
+local hasGroup = IsPlayerAceAllowed(source, "fxmanager.groups.moderator")
+```
+```js tab="JS"
+// using the export
+const hasGroup = exports.fxmanager.hasGroup(source, "moderator");
+
+// using the native
+const hasGroup = IsPlayerAceAllowed(source, "fxmanager.groups.moderator");
+```
+```cs tab="C#"
+// using the export
+bool hasGroup = Exports["fxmanager"].hasGroup(source, "moderator");
+
+// using the native
+bool hasGroup = API.IsPlayerAceAllowed(source.ToString(), "fxmanager.groups.moderator ");
+```
+
+Here is an updated version of your documentation. I have streamlined the explanation, clearly documented the behavior of the `slugifyGroupName` function, and added a practical example so admins understand exactly how their labels turn into permission slugs.
+
+---
+
+## Finding Group Names
+
+Group names (slugs) are automatically generated from their associated display labels upon creation. Because permissions are tied directly to these generated names, **updating a group's label after creation will break any existing permission implementations!**
+
+### Conversion Reference
+
+To find a group's name, apply the logic above to your label. Here are a few common examples of how labels translate to permission slugs in the webpanel:
+
+| Group Label | Generated Group Name (Slug) |
+| --- | --- |
+| `Super Admin` | `super_admin` |
+| `Moderator - Tier 1` | `moderator_tier_1` |
+| `Content Manager!!` | `content_manager` |

@@ -2,6 +2,7 @@
   "pages": [
     "index",
     "permissions",
+    "groups",
     "txadmin-compat",
     "player",
     "moderation",
