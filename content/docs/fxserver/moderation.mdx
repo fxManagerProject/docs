@@ -394,3 +394,69 @@ if (response.ok) {
   console.log("Unable to kick player:", response.error);
 }
 ```
+
+## Warn exports
+
+### `warnPlayer`
+
+**Payload:**
+<TypeTable
+  type={{
+    target: {
+      type: 'Target',
+      required: true,
+      description: (
+        <div>
+          <p>One of the following target types:</p>
+          <ul className="mt-2 list-disc pl-4 text-xs space-y-1">
+            <li><code>number</code>: The player's server ID.</li>
+            <li><code>{'{ serverId: number }'}</code>: The player's server ID.</li>
+            <li><code>{'{ playerId: number }'}</code>: The player's database ID.</li>
+            <li><code>{'{ identifiers: { license: string } }'}</code>: Direct lookup using Rockstar license hashes.</li>
+          </ul>
+        </div>
+      ),
+    },
+    reason: {
+      type: 'string',
+      required: true,
+      description: 'The reason or enforcement context attached to the kick.',
+    },
+    by: {
+      type: 'number',
+      required: true,
+      description: 'The database ID of the Admin/Staff member issuing the kick.',
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local payload = {
+    target = { serverId = 1 },
+    reason = "Exploiting game mechanics",
+    by = 1
+}
+
+local response = exports.fxManager:warnPlayer(payload)
+
+if response.ok then
+    print("Player successfully warned")
+else
+    print("Unable to warn player:", response.error)
+end
+```
+```ts tab="JS"
+const payload = {
+  target: { serverId: 1 },
+  reason: "Exploiting game mechanics",
+  by: 1,
+};
+
+const response = await exports.fxManager.warnPlayer(payload);
+
+if (response.ok) {
+  console.log("Player successfully warned");
+} else {
+  console.log("Unable to warn player:", response.error);
+}
+```
