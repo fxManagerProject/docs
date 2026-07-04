@@ -5,6 +5,7 @@
     "txadmin-compat",
     "player",
     "moderation",
-    "server"
+    "server",
+    "whitelist"
   ]
 }

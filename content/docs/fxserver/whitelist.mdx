@@ -1,0 +1,118 @@
+---
+title: "Allowlist Exports"
+description: "Or commonly called whitelisting."
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+<p className="hidden">Thanks cfx for creating confusion</p>
+
+### `whitelistAdd`
+
+**Payload:**
+<TypeTable
+  type={{
+    type: {
+      type: 'string',
+      required: true,
+      description: "The identifier scope classification (e.g., 'license', 'discord', 'steam').",
+    },
+    value: {
+      type: 'string',
+      required: true,
+      description: 'The target account string credential matching the scope type.',
+    },
+    by: {
+      type: 'number',
+      required: false,
+      description: 'The database ID of the Admin/Staff member authorizing the whitelist grant.',
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local payload = {
+    type = "discord",
+    value = "226389308305702912",
+    by = 1
+}
+
+local response = exports.fxManager:whitelistAdd(payload)
+
+if response.ok then
+    print("Player successfully added to the whitelist.")
+else
+    print("Failed to add player to whitelist:", response.error)
+end
+```
+```ts tab="JS"
+const payload = {
+  type: "discord",
+  value: "226389308305702912",
+  by: 1,
+};
+
+const response = await exports.fxManager.whitelistAdd(payload);
+
+if (response.ok) {
+  console.log("Player successfully added to the whitelist.");
+} else {
+  console.error(`Failed to add player to whitelist: ${response.error}`);
+}
+```
+
+---
+
+### `whitelistRemove`
+
+**Payload:**
+<TypeTable
+  type={{
+    type: {
+      type: 'string',
+      required: true,
+      description: "The identifier scope classification (e.g., 'license', 'discord', 'steam').",
+    },
+    value: {
+      type: 'string',
+      required: true,
+      description: 'The exact identifier string being revoked from the entry logs.',
+    },
+    by: {
+      type: 'number',
+      required: false,
+      description: 'The database ID of the Admin/Staff member processing the whitelist revocation.',
+    },
+  }}
+/>
+
+```lua tab="Lua"
+local payload = {
+    type = "discord",
+    value = "226389308305702912",
+    by = 1
+}
+
+local response = exports.fxManager:whitelistRemove(payload)
+
+if response.ok then
+    print("Player successfully removed from the whitelist.")
+else
+    print("Failed to remove player from whitelist:", response.error)
+end
+```
+```ts tab="JS"
+const payload = {
+  type: "discord",
+  value: "226389308305702912",
+  by: 1,
+};
+
+const response = await exports.fxManager.whitelistRemove(payload);
+
+if (response.ok) {
+  console.log("Player successfully removed from the whitelist.");
+} else {
+  console.error(`Failed to remove player from whitelist: ${response.error}`);
+}
+```
