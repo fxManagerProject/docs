@@ -139,6 +139,78 @@ if (result.ok) {
 
 ---
 
+### `getSelf`
+
+Retrieves the administrative profile and permission data for a specific player based on their server ID.
+
+**Parameters:**
+<TypeTable
+  type={{
+    playerId: {
+      type: 'number | string',
+      required: true,
+      description: 'The server ID of the player whose admin information is being requested.',
+    },
+  }}
+/>
+
+<Accordions type="single">
+<Accordion title="Response Format">
+    ```ts tab="TypeScript"
+      type Result = {
+        ok: true;
+        data: {
+            isAdmin: boolean;
+           	isMaster: boolean;
+           	adminId: number | null;
+           	username: string | null;
+           	group: { id: number; name: string; colour: string; icon: string | null } | null;
+           	permissions: string[];
+        }
+      } | {
+        ok: false;
+        error: string;
+      }
+      ```
+  </Accordion>
+</Accordions>
+
+```lua tab="Lua"
+-- The server ID of the player
+local playerId = 1
+
+local result = exports.fxmanager:getSelf(playerId)
+
+if result.ok then
+    if result.data.isAdmin then
+        print("Admin found: " .. tostring(result.data.username) .. " | Is Master: " .. tostring(result.data.isMaster))
+    else
+        print("Player is not an admin.")
+    end
+else
+    print("Lookup failed: " .. result.error)
+end
+
+```
+
+```js tab="JS"
+const playerId = 1;
+const result = exports.fxmanager.getSelf(playerId);
+
+if (result.ok) {
+  if (result.data.isAdmin) {
+    console.log(`Admin found: ${result.data.username} | Group: ${result.data.group?.name}`);
+  } else {
+    console.log("Player is not an admin.");
+  }
+} else {
+  console.error(`Lookup failed: ${result.error}`);
+}
+
+```
+
+---
+
 ### `searchPlayers`
 Searches the entire historical player database using text match strings alongside pagination and sorting options.
 
