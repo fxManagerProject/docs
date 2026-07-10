@@ -72,7 +72,7 @@ export function HeroSection({
           </div>
         </div>
 
-        {/* <div className="relative hidden h-56 w-full max-w-sm shrink-0 lg:block lg:h-72 lg:max-w-md xl:h-80">
+        <div className="relative hidden h-56 w-full max-w-sm shrink-0 lg:block lg:h-72 lg:max-w-md xl:h-80">
           {platforms.map((platform, i) => {
             const nextIndex = (index + 1) % platforms.length;
             const isCurrent = i === index;
@@ -98,7 +98,7 @@ export function HeroSection({
               />
             );
           })}
-        </div> */}
+        </div>
       </div>
     </section>
   );

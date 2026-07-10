@@ -1,17 +1,9 @@
-import {
-  ChartLine,
-  KeyRound,
-  Settings,
-  Shield,
-  type LucideIcon,
-} from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 type Feature = {
   title: string;
   description: string;
-  icon: LucideIcon;
   image: string;
   imageAlt: string;
   placeholderClass: string;
@@ -22,7 +14,6 @@ const features = [
     title: "Player Moderation",
     description:
       "Manage your community in real-time. Kick, ban, or warn players instantly from an intuitive web interface without opening the game.",
-    icon: Shield,
     image: "/assets/images/features/moderation.webp",
     imageAlt: "Player moderation dashboard",
     placeholderClass:
@@ -32,7 +23,6 @@ const features = [
     title: "Performance Tracking",
     description:
       "Monitor server tick rate, threads, player counts and player drop reasons via real-time analytics dashboards.",
-    icon: ChartLine,
     image: "/assets/images/features/performance.webp",
     imageAlt: "Performance tracking analytics",
     placeholderClass:
@@ -42,7 +32,6 @@ const features = [
     title: "Server Configuration",
     description:
       "Modify server variables, restart resources, and update configurations on the fly.",
-    icon: Settings,
     image: "/assets/images/features/configuration.webp",
     imageAlt: "Server configuration panel",
     placeholderClass:
@@ -52,7 +41,6 @@ const features = [
     title: "Permission-Based Roles",
     description:
       "Create granular staff roles with explicit permissions, ensuring moderators can only access the actions they need.",
-    icon: KeyRound,
     image: "/assets/images/features/roles.webp",
     imageAlt: "Permission-based roles management",
     placeholderClass:
@@ -67,8 +55,6 @@ function FeatureCard({
   feature: Feature;
   className?: string;
 }) {
-  const Icon = feature.icon;
-
   return (
     <Link
       href="/docs/installation"

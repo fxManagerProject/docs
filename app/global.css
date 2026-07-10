@@ -18,7 +18,52 @@ html > body[data-scroll-locked] {
 .site-docs-layout {
   --fd-docs-height: 100dvh;
   --fd-docs-row-1: var(--site-header-height);
+  --fd-docs-row-2: calc(var(--site-header-height) + var(--fd-header-height));
+  --fd-docs-row-3: calc(var(--fd-docs-row-2) + var(--fd-toc-popover-height));
   width: 100%;
+}
+
+@media (max-width: 767px) {
+  .site-docs-layout {
+    --fd-header-height: 0px;
+    --fd-toc-popover-height: 2.5rem;
+  }
+
+  .site-docs-layout #nd-page {
+    max-width: none !important;
+    width: 100%;
+    min-width: 0;
+  }
+
+  #nd-subnav {
+    display: none;
+  }
+
+  .site-docs-layout .fixed.inset-0.backdrop-blur-xs {
+    top: var(--site-header-height) !important;
+    z-index: 45 !important;
+  }
+
+  #nd-sidebar-mobile {
+    top: var(--site-header-height) !important;
+    bottom: 0 !important;
+    height: auto !important;
+    z-index: 46 !important;
+  }
+
+  body:has(#nd-sidebar-mobile[data-state="open"]) #site-footer {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-docs-layout#nd-docs-layout {
+    grid-template:
+      "sidebar main toc"
+      "sidebar main toc"
+      "sidebar main toc"
+      1fr / var(--fd-sidebar-col) minmax(0, 1fr) var(--fd-toc-width) !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -57,7 +102,7 @@ html > body[data-scroll-locked] {
 .dark {
   --color-fd-background: hsl(216, 14%, 7%);
   --color-fd-foreground: hsl(0, 0%, 92%);
-  --color-fd-muted: hsl(217, 15%, 17%); /* things like code */
+  --color-fd-muted: hsl(217, 15%, 17%);
   --color-fd-muted-foreground: hsla(0, 0%, 70%, 0.8);
   --color-fd-popover: hsl(0, 0%, 11.6%);
   --color-fd-popover-foreground: hsl(0, 0%, 86.9%);
@@ -77,4 +122,12 @@ html > body[data-scroll-locked] {
   --color-fd-muted: hsl(0, 0%, 16%);
   --color-fd-secondary: hsl(0, 0%, 18%);
   --color-fd-muted-foreground: hsl(0, 0%, 72%);
+}
+
+/* fumadocs search dialog: offset from viewport top on mobile */
+@media (max-width: 767px) {
+  [role="dialog"].max-w-screen-sm {
+    top: calc(var(--site-header-height) + 1rem) !important;
+    z-index: 60;
+  }
 }

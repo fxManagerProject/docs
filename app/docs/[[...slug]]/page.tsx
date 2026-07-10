@@ -1,4 +1,5 @@
 import { getPageImage, getPageMarkdownUrl, source } from "@/lib/source";
+import { DocsMobilePageNav } from "@/components/docs-mobile-page-nav";
 import {
   DocsBody,
   DocsDescription,
@@ -26,7 +27,13 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const isInfoPage = !params.slug || INFO_PAGES.includes(params.slug.join("/"));
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full} className="w-full max-w-none">
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      className="w-full min-w-0 max-w-none"
+      breadcrumb={{ className: "hidden md:flex" }}
+    >
+      <DocsMobilePageNav />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}

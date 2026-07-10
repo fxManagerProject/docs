@@ -7,6 +7,7 @@ import {
   FullSearchTrigger,
   SearchTrigger,
 } from "fumadocs-ui/layouts/shared/slots/search-trigger";
+import { DOCS_SIDEBAR_TRIGGER_SLOT_ID } from "@/components/docs-mobile-sidebar-trigger";
 import { gitConfig } from "@/lib/shared";
 import { cn } from "@/lib/cn";
 
@@ -29,7 +30,14 @@ export function SiteHeader() {
             : "bg-linear-to-b from-fd-background/80 to-transparent",
         )}
       >
-        <nav className="flex h-14 w-full items-center gap-4">
+        <nav className="flex h-14 w-full items-center gap-2.5">
+          {isDocs ? (
+            <div
+              id={DOCS_SIDEBAR_TRIGGER_SLOT_ID}
+              className="flex shrink-0 items-center md:hidden"
+            />
+          ) : null}
+
           <Link
             href="/"
             className="inline-flex shrink-0 items-center gap-2.5"

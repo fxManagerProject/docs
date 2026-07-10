@@ -31,7 +31,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto w-full shrink-0">
+    <footer id="site-footer" className="relative z-0 mt-auto w-full shrink-0">
       {!isDocs && (
         <div
           aria-hidden="true"
@@ -40,7 +40,7 @@ export function SiteFooter() {
       )}
       <div
         className={cn(
-          "relative z-10 border-t border-fd-border",
+          "relative border-t border-fd-border",
           isDocs && "bg-fd-card",
         )}
       >
