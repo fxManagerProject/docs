@@ -2,7 +2,7 @@
 
 ## Preview
 
-![Landing Preview FiveM](/assets/images/landing-preview.webp)
+![Landing Preview FiveM](/public/assets/images/landing-preview.webp)
 
 ## Introduction
 
