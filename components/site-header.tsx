@@ -15,6 +15,7 @@ const githubUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
 
 const navLinks = [
   { label: "Docs", href: "/docs" },
+  { label: "Design", href: "/design" },
   { label: "Support us", href: "/docs/support" },
 ] as const;
 

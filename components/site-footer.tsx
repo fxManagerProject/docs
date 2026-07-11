@@ -11,6 +11,7 @@ const githubUrl = `https://github.com/${gitConfig.user}`;
 const footerLinks = {
   documentation: [
     { label: "Overview", href: "/docs" },
+    { label: "Design", href: "/design" },
     { label: "Installation", href: "/docs/installation" },
     { label: "Development", href: "/docs/development" },
   ],
