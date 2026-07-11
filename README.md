@@ -1,5 +1,11 @@
 # fxmanager.docs
 
+## Preview
+
+![Landing Preview FiveM](/assets/images/landing-preview.webp)
+
+## Introduction
+
 This is a Next.js application generated with
 [Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 

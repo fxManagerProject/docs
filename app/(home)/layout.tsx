@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "fxManager",
   description:
-    "fxManager is an alternative webpanel to handle fxserver (fivem/redm) to txAdmin",
+    "fxManager is an alternative webpanel to handle fxserver (FiveM) to txAdmin",
   icons: {
     icon: [
       {

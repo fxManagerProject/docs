@@ -7,14 +7,6 @@ export const platforms = [
     gradient:
       "radial-gradient(100% 50% at 50% 0%, rgba(249, 115, 22, 0.14) 0, rgba(249, 115, 22, 0) 50%, rgba(249, 115, 22, 0) 100%)",
   },
-  {
-    label: "RedM",
-    className: "text-red-500",
-    image: "/assets/images/hero/redm.webp",
-    imageAlt: "RedM server illustration",
-    gradient:
-      "radial-gradient(100% 50% at 50% 0%, rgba(239, 68, 68, 0.14) 0, rgba(239, 68, 68, 0) 50%, rgba(239, 68, 68, 0) 100%)",
-  },
 ] as const;
 
 export type Platform = (typeof platforms)[number];

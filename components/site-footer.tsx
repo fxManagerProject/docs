@@ -62,7 +62,7 @@ export function SiteFooter() {
                 />
               </Link>
               <p className="mt-4 text-sm leading-relaxed text-fd-muted-foreground">
-                The webpanel for running ambitious FiveM and RedM servers.
+                The webpanel for running ambitious FiveM servers.
               </p>
             </div>
 
@@ -119,8 +119,7 @@ export function SiteFooter() {
             <p>© {year} {appName}. All rights reserved.</p>
             <p className="text-xs">
               Supporting{" "}
-              <span className="text-orange-500">FiveM</span> and{" "}
-              <span className="text-red-500">RedM</span> servers.
+              <span className="text-orange-500">FiveM</span> servers.
             </p>
           </div>
         </div>

@@ -23,30 +23,36 @@ export function HeroSection({
         <div className="max-w-xl shrink-0">
           <h1 className="mb-5 max-w-4xl text-2xl tracking-tight text-fd-foreground transition-transform duration-300 ease-in-out sm:text-4xl">
             The webpanel for running <br /> ambitious{" "}
-            <span className="relative inline-block h-[1.15em] min-w-[3.5ch] overflow-hidden translate-y-[4px] md:translate-y-[9px] align-baseline">
-              <span
-                className={cn(
-                  "block whitespace-nowrap",
-                  current.className,
-                  isAnimating
-                    ? "translate-y-full transition-transform duration-500 ease-in-out"
-                    : "translate-y-0",
-                )}
-              >
+            {current.label === next.label ? (
+              <span className={cn("inline-block", current.className)}>
                 {current.label}
               </span>
-              <span
-                className={cn(
-                  "absolute inset-x-0 top-0 block whitespace-nowrap",
-                  next.className,
-                  isAnimating
-                    ? "translate-y-0 transition-transform duration-500 ease-in-out"
-                    : "-translate-y-full",
-                )}
-              >
-                {next.label}
+            ) : (
+              <span className="relative inline-block h-[1.15em] min-w-[3.5ch] overflow-hidden translate-y-[4px] md:translate-y-[9px] align-baseline">
+                <span
+                  className={cn(
+                    "block whitespace-nowrap",
+                    current.className,
+                    isAnimating
+                      ? "translate-y-full transition-transform duration-500 ease-in-out"
+                      : "translate-y-0",
+                  )}
+                >
+                  {current.label}
+                </span>
+                <span
+                  className={cn(
+                    "absolute inset-x-0 top-0 block whitespace-nowrap",
+                    next.className,
+                    isAnimating
+                      ? "translate-y-0 transition-transform duration-500 ease-in-out"
+                      : "-translate-y-full",
+                  )}
+                >
+                  {next.label}
+                </span>
               </span>
-            </span>{" "}
+            )}{" "}
             servers.
           </h1>
           <p className="text-sm tracking-wide text-fd-muted-foreground">
