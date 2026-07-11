@@ -66,7 +66,7 @@ export function DocsMobilePageNav() {
     <div className="flex flex-col gap-3 border-b border-fd-border pb-4 md:hidden">
       <PageBreadcrumb includeRoot className="min-w-0" />
 
-      <div>
+      {/* <div>
         <label htmlFor="docs-page-picker" className="sr-only">
           Jump to page
         </label>
@@ -87,7 +87,7 @@ export function DocsMobilePageNav() {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </div>
   );
 }

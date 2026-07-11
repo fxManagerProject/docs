@@ -23,7 +23,7 @@ export function HeroSection({
         <div className="max-w-xl shrink-0">
           <h1 className="mb-5 max-w-4xl text-2xl tracking-tight text-fd-foreground transition-transform duration-300 ease-in-out sm:text-4xl">
             The webpanel for running <br /> ambitious{" "}
-            <span className="relative inline-block h-[1.15em] min-w-[3.5ch] translate-y-[9px] overflow-hidden align-baseline">
+            <span className="relative inline-block h-[1.15em] min-w-[3.5ch] overflow-hidden translate-y-[4px] md:translate-y-[9px] align-baseline">
               <span
                 className={cn(
                   "block whitespace-nowrap",
