@@ -13,6 +13,11 @@ import { cn } from "@/lib/cn";
 
 const githubUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
 
+const navLinks = [
+  { label: "Docs", href: "/docs" },
+  { label: "Support us", href: "/docs/support" },
+] as const;
+
 export function SiteHeader() {
   const pathname = usePathname();
   const isDocs = pathname.startsWith("/docs");
@@ -30,7 +35,7 @@ export function SiteHeader() {
             : "bg-linear-to-b from-fd-background/80 to-transparent",
         )}
       >
-        <nav className="flex h-14 w-full items-center gap-2.5">
+        <nav className="flex h-14 w-full items-center gap-6">
           {isDocs ? (
             <div
               id={DOCS_SIDEBAR_TRIGGER_SLOT_ID}
@@ -52,6 +57,18 @@ export function SiteHeader() {
               priority
             />
           </Link>
+
+          <div className="hidden items-center gap-6 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-white/60 transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
 
           <div className="ms-auto flex shrink-0 items-center justify-end gap-1.5">
             <FullSearchTrigger
