@@ -4,7 +4,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 import { usePathname, useRouter } from "next/navigation";
 import { PageBreadcrumb } from "fumadocs-ui/layouts/docs/page";
 import { useTreeContext } from "fumadocs-ui/contexts/tree";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type PageOption = {
@@ -12,6 +12,12 @@ type PageOption = {
   label: string;
   depth: number;
 };
+
+function getNodeLabel(name: ReactNode): string {
+  if (typeof name === "string") return name;
+  if (typeof name === "number") return String(name);
+  return "";
+}
 
 function flattenPageTree(
   nodes: PageTree.Node[],
@@ -23,14 +29,18 @@ function flattenPageTree(
 
     if (node.type === "folder") {
       if (node.index && !node.index.external) {
-        options.push({ url: node.index.url, label: node.name, depth });
+        options.push({
+          url: node.index.url,
+          label: getNodeLabel(node.name),
+          depth,
+        });
       }
       flattenPageTree(node.children, depth + 1, options);
       continue;
     }
 
     if (node.type === "page" && !node.external) {
-      options.push({ url: node.url, label: node.name, depth });
+      options.push({ url: node.url, label: getNodeLabel(node.name), depth });
     }
   }
 
