@@ -18,8 +18,8 @@ import {
   Sidebar,
   PanelLeft,
 } from "lucide-react";
-import SidebarDemo from "./components/sidebar";
-import PerformanceShowcase from "./components/perf_showcase";
+import SidebarDemo from "@/components/features/sidebar";
+import PerformanceShowcase from "@/components/features/perf_showcase";
 
 export default function FeaturesPage() {
   const primaryModules = [
@@ -75,7 +75,6 @@ export default function FeaturesPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] flex-1 px-4 py-12 select-none max-w-5xl mx-auto animate-fade-in">
-      {/* Page Header */}
       <div className="text-center mb-16 max-w-3xl">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4 text-primary">
           Features & Capabilities

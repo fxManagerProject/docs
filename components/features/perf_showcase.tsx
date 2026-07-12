@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Activity, History } from "lucide-react";
-import Image from "next/image";
 import perf_histogram from "./images/perf_histogram.webp";
 import perf_charts from "./images/perf_charts.webp";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";

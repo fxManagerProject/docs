@@ -74,7 +74,6 @@ export default function Sidebar() {
           <div className="flex w-full flex-row gap-2">
             <button
               disabled
-              // className={`flex-1 border-${colour}/30 text-${colour} hover:bg-${colour}/10 disabled:opacity-40`}
               className="flex-1 inline-flex items-center justify-center rounded-md text-sm font-medium border border-green-400/30
               bg-[oklch(1_0_0)] dark:bg-[oklch(0.141_0.005_285.823)] shadow-sm h-8 opacity-40 cursor-not-allowed"
             >
