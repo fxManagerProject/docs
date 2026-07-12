@@ -65,7 +65,7 @@ export default function SupportPage() {
           {teamMembers.map((member) => (
             <div
               key={member.handle}
-              className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border bg-fd-card text-fd-card-foreground"
+              className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border bg-fd-card text-fd-card-foreground hover:bg-fd-accent"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <img
@@ -140,12 +140,12 @@ export default function SupportPage() {
             href="https://github.com/fxManagerProject/fxManager"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 h-11 px-5 w-full sm:w-auto rounded-lg bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 font-medium transition-colors no-underline box-border whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2 h-11 px-5 w-full sm:w-auto rounded-lg border border-fd-border bg-transparent text-fd-foreground hover:bg-fd-accent/50 dark:border-transparent dark:bg-fd-foreground dark:text-fd-background dark:hover:bg-fd-foreground/70 font-medium transition-colors no-underline box-border whitespace-nowrap"
           >
             <img
               src="/github.svg"
               alt="GitHub Logo"
-              className="w-5 h-5 min-w-[20px] min-h-[20px] shrink-0 object-contain pointer-events-none"
+              className="w-5 h-5 min-w-[20px] min-h-[20px] shrink-0 object-contain pointer-events-none text-foreground"
               aria-hidden="true"
             />
             <span>Star on GitHub</span>
