@@ -152,7 +152,7 @@ export default function SupportPage() {
           </a>
 
           <a
-            href="https://discord.gg/WxFGydWfhP"
+            href="https://discord.gg/5K6CTkFKJR"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 h-11 px-5 w-full sm:w-auto rounded-lg bg-[#5865F2] text-white hover:bg-[#4752C4] font-medium transition-colors no-underline box-border whitespace-nowrap"
