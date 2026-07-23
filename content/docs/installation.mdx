@@ -5,11 +5,55 @@ description: "How to download, configure, and initialize fxManager for your game
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+fxManager can be installed via our automated CLI installer (recommended) or set up manually. Choose your preferred method below.
+
+## Install the webpanel
+
+<Tabs items={['CLI Installer (Recommended)', 'Manual Installation']}>
+<Tab>
+
+The CLI installer automates downloading assets, provisioning environments, and configuring files.
+
+Download and run the installer directly in your terminal:
+
+* **Windows (PowerShell):**
+
+```powershell
+Invoke-WebRequest -Uri \
+    'https://github.com/fxManagerProject/cli-installer/releases/latest/download/fxmanager-installer-windows-amd64.exe' \
+    -OutFile 'fxmanager-installer.exe'; \
+    .\fxmanager-installer.exe
+
+```
+
+* **Linux:**
+
+```bash
+curl -sSL \
+    'https://github.com/fxManagerProject/cli-installer/releases/latest/download/fxmanager-installer-linux-amd64' \
+    -o fxmanager-installer && \
+    chmod +x fxmanager-installer && \
+    ./fxmanager-installer
+
+```
+
+Running the executable with no arguments will launch an interactive TUI prompt wizard to guide you through your setup.
+
+<Callout title="Future additions">
+    The installer will continue to receive updates to include the following features:
+    * Recipe installer (reusing the txAdmin recipes)
+    * Updater (either updating fxManager, fxServer or both)
+</Callout>
+
+</Tab>
+<Tab>
 
 <Steps>
 <Step>
 
-### Download the Release Assets
+### Download the Release Assets [!toc]
 
 Go to the [GitHub Releases Page](https://github.com/fxManagerProject/fxmanager/releases) and download the target assets for your environment. You will need two components:
 1. The backend application binary matching your host operating system (`windows` or `linux`).
@@ -32,11 +76,11 @@ your-install-folder/
 
 <Step>
 
-### Prepare FXServer Requirements
+### Prepare FXServer Requirements [!toc]
 
 fxManager acts as an external process manager; it does not bundle or install the base game server binaries for you. Ensure your baseline server structure is already functional.
 
-#### Requirements Checklist:
+#### Requirements Checklist: [!toc]
 
 * **FXServer Artifacts:** Ensure your runtime artifacts are up to date.
   * *Recommended Tool:* [JG Scripts Artifacts Portal](https://artifacts.jgscripts.com)
@@ -45,13 +89,22 @@ fxManager acts as an external process manager; it does not bundle or install the
 
 * **Valid Server Data Directory:** Your layout must contain a standard root `resources/` folder and your primary `server.cfg` file.
 
-#### Installing the Game Resource:
+#### Installing the Game Resource: [!toc]
 
 Take the extracted `resource/` bundle from Step 1, rename or verify the folder is called `fxManager`, and drop it cleanly into your server's `resources/` directory.
 
 Optionally, for projects with experienced teams you can place the resource within the `system_resources/` directory and delete the txAdmin resource (`monitor`). However, do not do this unless you know what you're doing.
 
 </Step>
+</Steps>
+</Tab>
+</Tabs>
+
+---
+
+## Running the webpanel
+
+<Steps>
 <Step>
 
 ### Run the Core Executable
