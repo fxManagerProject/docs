@@ -1,0 +1,46 @@
+---
+title: "OAuth"
+description: Setting up OAuth for fxManager.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Discord OAuth
+
+<Steps>
+<Step>
+    ### Create a Discord application.
+
+    1. Go to the [Discord Developer Portal](https://discord.com/developers/applications) and log in with your Discord account.
+    2. Click the **New Application** button in the top right corner.
+    3. Enter a name for your application (e.g., `fxManager`), accept the developer terms, and click **Create**.
+</Step>
+<Step>
+    ### Configure Redirect URIs
+
+    1. On your application's dashboard, navigate to the **OAuth2** tab from the left sidebar.
+    2. Under the **Redirects** section, click **Add Redirect**.
+    3. Enter your webpanel's callback URL, e.g:
+        * `https://yourdomain.com/api/auth/callback/discord`
+        * `https://your_ip:port/api/auth/callback/discord`
+
+    <Callout type="warning" title="Redirect URI Mismatch">
+      Make sure that your redirect URI matches precisely between the Discord Developer Portal and your webpanel configuration to avoid redirect_uri_mismatch errors during authentication.
+    </Callout>
+</Step>
+<Step>
+    ### Copy Credentials
+
+    1. Still under the **OAuth2** tab, locate the **Client Information** section.
+    2. Copy your **Client ID**.
+    3. Click **Reset Secret** to generate your **Client Secret**, and copy it securely (make sure to save it, as Discord won't show it again).
+</Step>
+<Step>
+    ### Configure fxManager Webpanel
+
+    1. Open your `fxManager` webpanel settings dashboard, and navigate to the authentication tab.
+    2. Paste both your **Client ID** and **Client Secret** into their respective fields.
+    3. Enable OAuth integration in the webpanel settings.
+</Step>
+</Steps>
