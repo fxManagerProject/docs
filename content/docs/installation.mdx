@@ -18,13 +18,13 @@ Go to the [GitHub Releases Page](https://github.com/fxManagerProject/fxmanager/r
 Extract the zip archive contents directly into your chosen host directory.
 
 <Callout type="warn" title="Strict Directory Hierarchy">
-  The panel asset structure must remain intact exactly as extracted. Moving or separating the `public/` asset directory away from the primary `fxmanager` executable will cause path resolution failures at runtime.
+  The panel asset structure must remain intact exactly as extracted. Moving or separating the `assets/` asset directory away from the primary `fxmanager` executable will cause path resolution failures at runtime.
 </Callout>
 
 ```text
 your-install-folder/
 ├── fxmanager-windows.exe (or fxmanager-linux)
-├── public/                 <-- Critical front-end assets
+├── assets/                 <-- Critical front-end assets
 └── .env                    <-- optional
 ```
 
