@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import { getContributorsList } from "@/lib/getcontributors";
 
 export const metadata: Metadata = {
   title: "Support fxManager",
@@ -19,12 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SupportPage() {
-  const teamMembers = [
-    { name: "Maximus", handle: "Maximus7474", kofi: "Maximus7474" },
-    { name: "Andreutu", handle: "andreutu" },
-    { name: "Zoo", handle: "FjamZoo", kofi: "FjamZoo" },
-  ];
+export default async function SupportPage() {
+  const contributors = await getContributorsList();
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -62,33 +59,33 @@ export default function SupportPage() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
-          {teamMembers.map((member) => (
+          {contributors.core.map((member) => (
             <div
-              key={member.handle}
+              key={member.id}
               className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border bg-fd-card text-fd-card-foreground hover:bg-fd-accent"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <img
-                  src={`https://github.com/${member.handle}.png?size=80`}
-                  alt={member.name}
+                  src={
+                    member.image ||
+                    `https://github.com/${member.username}.png?size=80`
+                  }
+                  alt={member.username}
                   className="w-11 h-11 rounded-full border m-0 shrink-0"
                 />
                 <div className="flex flex-col min-w-0">
                   <span className="font-semibold text-sm text-fd-foreground truncate">
-                    {member.name}
-                  </span>
-                  <span className="text-xs text-fd-muted-foreground truncate">
-                    @{member.handle}
+                    {member.username}
                   </span>
                 </div>
               </div>
 
               <div className="flex items-center gap-1.5 shrink-0">
                 <a
-                  href={`https://github.com/${member.handle}`}
+                  href={`https://github.com/${member.username}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={`View ${member.name}'s GitHub`}
+                  title={`View ${member.username}'s GitHub`}
                   className="flex items-center justify-center p-2 rounded-lg border bg-fd-background text-fd-muted-foreground hover:text-fd-foreground hover:bg-fd-accent transition-colors"
                 >
                   <svg
@@ -109,7 +106,7 @@ export default function SupportPage() {
                     href={`https://ko-fi.com/${member.kofi}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title={`Support ${member.name} on Ko-fi`}
+                    title={`Support ${member.username} on Ko-fi`}
                     className="flex items-center justify-center p-2 rounded-lg bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white transition-colors"
                   >
                     <svg
@@ -304,6 +301,75 @@ export default function SupportPage() {
               </div>
             </Accordion>
           </Accordions>
+        </div>
+
+        <hr className="my-12 border-fd-border" />
+
+        <h2 className="text-2xl font-bold tracking-tight inline-flex items-center">
+          <div className="inline-flex aspect-square h-6 w-6 items-center justify-center rounded-md bg-[oklch(0.555_0.163_48.998)] text-white align-middle ml-2">
+            <Server className="h-4 w-4" />
+          </div>
+          <span className="ml-2">Our Contributors</span>
+        </h2>
+
+        <>
+          <p className="leading-relaxed mt-6">
+            As an open-source project, we rely on contributions from people like
+            you. Every contribution matters, whether it's simple spelling fixes,
+            a new feature, or squashing a bug that slipped under the radar.
+          </p>
+          <p className="leading-relaxed mt-4">
+            We deeply appreciate everyone who dedicates their free time to
+            giving back to the open-source community. Here is a massive thank
+            you to all of them.
+          </p>
+        </>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+          {contributors.external.map((member) => (
+            <div
+              key={member.id}
+              className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border bg-fd-card text-fd-card-foreground hover:bg-fd-accent"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <img
+                  src={
+                    member.image ||
+                    `https://github.com/${member.username}.png?size=80`
+                  }
+                  alt={member.username}
+                  className="w-11 h-11 rounded-full border m-0 shrink-0"
+                />
+                <div className="flex flex-col min-w-0">
+                  <span className="font-semibold text-sm text-fd-foreground truncate">
+                    {member.username}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <a
+                  href={`https://github.com/${member.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`View ${member.username}'s GitHub`}
+                  className="flex items-center justify-center p-2 rounded-lg border bg-fd-background text-fd-muted-foreground hover:text-fd-foreground hover:bg-fd-accent transition-colors"
+                >
+                  <svg
+                    className="h-4 w-4 fill-current"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
