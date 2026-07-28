@@ -1,5 +1,12 @@
 # fxmanager.docs
 
+## Licensing
+
+- Documentation and non-code content: CC BY 4.0
+- Code snippets and example blocks: MIT, unless otherwise noted
+
+## Development
+
 This is a Next.js application generated with
 [Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 
