@@ -112,6 +112,6 @@ export const getContributorsList = unstable_cache(
   fetchAndProcessContributors,
   ["github-contributors-cache"], // Unique cache key
   {
-    revalidate: 3600, // TTL in seconds (1 hour)
+    revalidate: 6 * 3600, // TTL in seconds (6 hours)
   },
 );
