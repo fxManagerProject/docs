@@ -22,8 +22,8 @@ import { Callout } from 'fumadocs-ui/components/callout';
     1. On your application's dashboard, navigate to the **OAuth2** tab from the left sidebar.
     2. Under the **Redirects** section, click **Add Redirect**.
     3. Enter your webpanel's callback URL, e.g:
-        * `https://yourdomain.com/api/auth/callback/discord`
-        * `https://your_ip:port/api/auth/callback/discord`
+        * `https://yourdomain.com/api/auth/oauth/discord/callback`
+        * `http://your_ip:port/api/auth/oauth/discord/callback`
 
     <Callout type="warning" title="Redirect URI Mismatch">
       Make sure that your redirect URI matches precisely between the Discord Developer Portal and your webpanel configuration to avoid redirect_uri_mismatch errors during authentication.
