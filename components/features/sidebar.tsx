@@ -1,20 +1,87 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, type ReactNode } from "react";
 import {
   ArrowUpCircle,
+  CheckCircle2,
   ExternalLink,
+  Info,
+  type LucideIcon,
+  Pause,
   Play,
   RefreshCw,
   Square,
 } from "lucide-react";
+import cn from "cnfast";
+
+type ArtifactStatus = "outdated" | "current" | "ahead";
+
+interface ArtifactStatePresentation {
+  Icon: LucideIcon;
+  className: string;
+  label: (recommended: string) => ReactNode;
+}
+
+const ARTIFACT_STATES: ArtifactStatus[] = ["outdated", "current", "ahead"];
+
+const ARTIFACT_STATE: Record<ArtifactStatus, ArtifactStatePresentation> = {
+  outdated: {
+    Icon: ArrowUpCircle,
+    className:
+      "border-primary/30 bg-primary/10 text-primary hover:bg-primary/20",
+    label: (recommended) => (
+      <>
+        <span className="font-mono">b{recommended}</span> recommended
+      </>
+    ),
+  },
+  current: {
+    Icon: CheckCircle2,
+    className: "border-border bg-muted/50 text-muted-foreground hover:bg-muted",
+    label: () => "Up to date",
+  },
+  ahead: {
+    Icon: Info,
+    className: "border-border bg-muted/50 text-muted-foreground hover:bg-muted",
+    label: (recommended) => (
+      <>
+        Ahead of <span className="font-mono">b{recommended}</span>
+      </>
+    ),
+  },
+};
+
+const ARTIFACTS_URL = "https://artifacts.jgscripts.com/";
 
 export default function Sidebar() {
   const [uptimeSeconds, setUptimeSeconds] = useState(0.9 * 3_600);
-
-  /** 3 hours in seconds  */
   const RESTART_INTERVAL = 1 * 3_600;
   const [restartSeconds, setRestartSeconds] = useState(RESTART_INTERVAL);
+
+  // Auto-cycle state management
+  const [statusIndex, setStatusIndex] = useState(0);
+  const currentVersion = "7000";
+
+  const status = ARTIFACT_STATES[statusIndex];
+
+  // Determine recommended version string based on current active state
+  const recommendedVersion =
+    status === "outdated"
+      ? "7341"
+      : status === "ahead"
+        ? "6800"
+        : currentVersion;
+
+  const artifactState = ARTIFACT_STATE[status];
+
+  // Auto-switch states every 3 seconds
+  useEffect(() => {
+    const cycleTimer = setInterval(() => {
+      setStatusIndex((prevIndex) => (prevIndex + 1) % ARTIFACT_STATES.length);
+    }, 3000);
+
+    return () => clearInterval(cycleTimer);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,7 +92,6 @@ export default function Sidebar() {
     return () => clearInterval(timer);
   }, []);
 
-  // Helper function to format seconds into XXh YYm ZZs
   const formatTime = (totalSeconds: number) => {
     const h = Math.floor(totalSeconds / 3600);
     const m = Math.floor((totalSeconds % 3600) / 60);
@@ -118,18 +184,30 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <div className="space-y-3 border-t border-border pt-4">
-          <div className="flex flex-row justify-between items-center">
-            <p className="text-muted-foreground">Artifact</p>
-            <p className="font-mono text-xs text-foreground">b7341</p>
+        <div className="space-y-2 border-t pt-3">
+          <div className="flex flex-row justify-between">
+            <p>Artifact</p>
+            <p className="font-mono">b{currentVersion}</p>
           </div>
-          <div className="flex flex-row justify-between items-center">
-            <p className="text-muted-foreground">Recommended</p>
-            <div className="inline-flex items-center gap-1 font-mono text-xs text-[oklch(0.555_0.163_48.998)] dark:text-[oklch(0.473_0.137_46.201)] hover:underline cursor-pointer">
-              b7341
-              <ExternalLink className="h-3 w-3" />
-            </div>
-          </div>
+
+          {artifactState && (
+            <a
+              href={ARTIFACTS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(
+                "flex items-center gap-2 rounded-md border px-2 py-1.5 text-xs transition-colors",
+                artifactState.className,
+              )}
+              title="Source: artifacts.jgscripts.com"
+            >
+              <artifactState.Icon className="h-3.5 w-3.5 shrink-0" />
+              <span className="flex-1">
+                {artifactState.label(recommendedVersion)}
+              </span>
+              <ExternalLink className="h-3 w-3 shrink-0" />
+            </a>
+          )}
         </div>
 
         <div className="space-y-2 border-t border-border pt-4">
