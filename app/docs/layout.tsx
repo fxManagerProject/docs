@@ -5,8 +5,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "fxManager Docs",
-  description:
-    "Documentation to integrate, use and install fxManager",
+  description: "Documentation to integrate, use and install fxManager",
   icons: {
     icon: [
       {

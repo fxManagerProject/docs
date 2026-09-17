@@ -45,6 +45,7 @@ export default function PerformanceShowcase() {
               : "Historical Histogram"
           }
           className="w-full h-auto rounded shadow-sm cursor-zoom-in transition-all duration-300"
+          loading="eager"
         />
       </div>
     </div>
